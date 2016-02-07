@@ -1,8 +1,11 @@
 plugins {
+    id 'groovy'
+    id 'idea'
+    id 'jacoco'
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.6"
     id "us.kirchmeier.capsule" version "1.0-rc1"
 }
-apply plugin: 'groovy'
-apply plugin: 'idea'
 
 repositories {
     jcenter()
@@ -17,6 +20,48 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+def ENV = System.getenv()
+
 task fatCapsule(type: FatCapsule) {
     applicationClass 'dis.DiffInfoServiceApplication'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allGroovy
+}
+
+publishing {
+    publications {
+        JCenterPublication(MavenPublication) {
+            from components.java
+            groupId 'com.github.scottg489'
+            artifactId 'diff-info-service'
+            version "0.${ENV['SNAP_PIPELINE_COUNTER']}"
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+bintray {
+    user = "${ENV['BINTRAY_USER']}"
+    key = "${ENV['BINTRAY_KEY']}"
+    pkg {
+        repo = 'maven'
+        name = 'diff-info-service'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'git@github.com:ScottG489/diff-info-service.git'
+        version {
+            name = '0.1-alpha'
+        }
+    }
+    publications = ['JCenterPublication']
+    publish = true
 }
