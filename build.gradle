@@ -44,9 +44,8 @@ publishing {
             groupId 'com.github.scottg489'
             artifactId 'diff-info-service'
             version "0.${ENV['SNAP_PIPELINE_COUNTER']}"
-            artifact sourceJar {
-                classifier "sources"
-            }
+            artifact source: sourceJar, classifier: "sources"
+            artifact source: fatCapsule, classifier: "capsule"
         }
     }
 }
