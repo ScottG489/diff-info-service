@@ -19,6 +19,6 @@ public class InfoResource extends BaseResource {
     public Response doAction() {
         log.info("Info resource triggered.")
 
-        return new Response(true, "Fin")
+        return new Response(true, "Done")
     }
 }
