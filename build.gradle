@@ -5,6 +5,7 @@ plugins {
     id 'maven-publish'
     id "com.jfrog.bintray" version "1.6"
     id "us.kirchmeier.capsule" version "1.0-rc1"
+    id "com.jfrog.artifactory" version "4.0.0"
 }
 
 repositories {
@@ -49,6 +50,21 @@ publishing {
         }
     }
 }
+
+artifactory {
+    contextUrl = 'https://oss.jfrog.org/artifactory'
+    publish {
+        repository {
+            repoKey = 'oss-release-local'
+            username = "${ENV['BINTRAY_USER']}"
+            password = "${ENV['BINTRAY_KEY']}"
+        }
+        defaults {
+            publications('JCenterPublication')
+        }
+    }
+}
+
 bintray {
     user = "${ENV['BINTRAY_USER']}"
     key = "${ENV['BINTRAY_KEY']}"
