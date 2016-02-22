@@ -26,6 +26,9 @@ def ENV = System.getenv()
 
 task fatCapsule(type: FatCapsule) {
     applicationClass 'dis.DiffInfoServiceApplication'
+    capsuleManifest {
+        applicationVersion = "0.${ENV['SNAP_PIPELINE_COUNTER']}"
+    }
 }
 
 jacocoTestReport {
