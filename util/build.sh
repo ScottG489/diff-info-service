@@ -27,4 +27,4 @@ aws elasticbeanstalk create-application-version --application-name $APP_ID --ver
 aws elasticbeanstalk create-configuration-template --application-name $APP_ID --template-name my_tmpl_name --solution-stack-name "64bit Amazon Linux 2018.03 v2.12.6 running Docker 18.06.1-ce"
 # dns name needs to be globally unique
 # can use aws elasticbeanstalk check-dns-availability --cname-prefix my-cname to check if it's available
-aws elasticbeanstalk create-environment --cname-prefix $APP_ID --application-name $APP_ID --template-name my_tmpl_name --version-label vlbl_1 --environment-name my-env
+aws elasticbeanstalk create-environment --cname-prefix $APP_ID --application-name $APP_ID --template-name my_tmpl_name --version-label vlbl_1 --environment-name $APP_ID-env
