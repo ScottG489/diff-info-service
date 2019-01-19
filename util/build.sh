@@ -1,11 +1,5 @@
 #!/bin/bash
-ID_RSA_CONTENTS=$1
-AWS_CREDENTIALS_CONTENTS=$2
-DOCKER_CONFIG_CONTENTS=$3
-
-printf -- "$ID_RSA_CONTENTS" > /root/.ssh/id_rsa
-printf -- "$AWS_CREDENTIALS_CONTENTS" > /root/.aws/credentials
-printf -- "$DOCKER_CONFIG_CONTENTS" > /root/.docker/config.json
+set -e
 
 chmod 400 /root/.ssh/id_rsa
 
