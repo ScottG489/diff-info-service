@@ -5,10 +5,10 @@ chmod 400 /root/.ssh/id_rsa
 
 git clone git@github.com:ScottG489/diff-info-service.git
 cd diff-info-service
-#./gradlew build fatCapsule
+./gradlew build fatCapsule
 
-#docker build -t diff-info-service:latest .
-#docker push scottg489/diff-info-service:latest
+docker build -t diff-info-service:latest .
+docker push scottg489/diff-info-service:latest
 
 # Things below we may only want to run once and not for every deployment
 APP_ID=$(head /dev/urandom | tr -dc a-z0-9 | head -c 7 ; echo '')
