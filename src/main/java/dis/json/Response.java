@@ -1,13 +1,10 @@
-package dis.json
+package dis.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Response {
-    private boolean success;
-    private String content;
-
     public Response(boolean success, String content) {
-        this.success = success
+        this.success = success;
         this.content = content;
     }
 
@@ -20,4 +17,7 @@ public class Response {
     public String getContent() {
         return content;
     }
+
+    private boolean success;
+    private String content;
 }

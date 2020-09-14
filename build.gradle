@@ -1,10 +1,11 @@
 plugins {
-    id 'groovy'
+    id 'java'
     id 'idea'
     id 'jacoco'
     id 'maven-publish'
     id "com.jfrog.bintray" version "1.6"
-    id "us.kirchmeier.capsule" version "1.0-rc1"
+//    id "us.kirchmeier.capsule" version "1.0-rc1"
+    id 'application'
     id "com.jfrog.artifactory" version "4.0.0"
 }
 
@@ -13,23 +14,29 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
 
-    compile 'io.dropwizard:dropwizard-core:0.9.2'
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: '2.0.10'
     compile 'com.github.scottg489:unified-diff-parser:0.66'
 
-    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    compile 'org.codehaus.groovy:groovy-all:2.4.4'
+
     testCompile 'junit:junit:4.12'
 }
 
 def ENV = System.getenv()
 
-task fatCapsule(type: FatCapsule) {
-    applicationClass 'dis.DiffInfoServiceApplication'
-    capsuleManifest {
-        applicationVersion = "0.${ENV['SNAP_PIPELINE_COUNTER']}"
-    }
-}
+//task fatcapsule(type: fatcapsule) {
+//    applicationclass 'dis.diffinfoserviceapplication'
+//    capsulemanifest {
+//        applicationversion = "0.${env['snap_pipeline_counter']}"
+//    }
+//}
+
+//task sourceJar(type: Jar) {
+//    from sourceSets.main.allGroovy
+//}
 
 jacocoTestReport {
     reports {
@@ -38,22 +45,18 @@ jacocoTestReport {
     }
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.allGroovy
-}
-
-publishing {
-    publications {
-        JCenterPublication(MavenPublication) {
-            from components.java
-            groupId 'com.github.scottg489'
-            artifactId 'diff-info-service'
-            version "0.${ENV['SNAP_PIPELINE_COUNTER']}"
-            artifact source: sourceJar, classifier: "sources"
-            artifact source: fatCapsule, classifier: "capsule"
-        }
-    }
-}
+//publishing {
+//    publications {
+//        JCenterPublication(MavenPublication) {
+//            from components.java
+//            groupId 'com.github.scottg489'
+//            artifactId 'diff-info-service'
+//            version "0.${ENV['SNAP_PIPELINE_COUNTER']}"
+//            artifact source: sourceJar, classifier: "sources"
+//            artifact source: fatCapsule, classifier: "capsule"
+//        }
+//    }
+//}
 
 artifactory {
     contextUrl = 'https://oss.jfrog.org/artifactory'
